@@ -1,5 +1,9 @@
 # Readiness & liveness probes
 
+<p align="center">
+  <img src="./assets/liveness-readiness-probe.png" alt="liveness-readiness-probe hero image" width="900">
+</p>
+
 The goal of this lab to quickly figure out how `readienssProbe` and `livenessProbe` works in k8s.
 
 This labs uses the exec command so you don't have to create some REST API with `/health`

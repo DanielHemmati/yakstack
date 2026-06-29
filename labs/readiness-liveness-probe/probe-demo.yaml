@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: probe-demo
+  name: probe-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: probe-demo
+  template:
+    metadata:
+      labels:
+        app: probe-demo
+    spec:
+      containers:
+        - image: busybox
+          name: busybox
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /www
+              echo "hello from probe-demo" > /www/index.html
+
+              # liveness becomes OK immediately
+              touch /tmp/live
+
+              # readiness becomes OK after 15 sec
+              sleep 15
+              touch /tmp/ready
+
+              httpd -f -p 8080 -h /www
+          ports:
+            - containerPort: 8080
+
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - test -f /tmp/ready
+            periodSeconds: 5
+            failureThreshold: 1
+
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - test -f /tmp/live
+            periodSeconds: 5
+            failureThreshold: 1

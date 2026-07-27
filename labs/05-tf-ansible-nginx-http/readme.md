@@ -5,6 +5,4 @@
 3. Then get the `public_ip` using `terraform output -raw public_ip`
 4. Visit the site
 
-TODO: Link to other labs for https
-
 > NOTE: This project works only on HTTP, Check another lab for HTTPS

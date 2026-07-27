@@ -44,3 +44,36 @@ terraform.rc
 # planout
 
 
+
+# Ansible runtime files
+*.retry
+ansible.log
+**/ansible.log
+.ansible/
+**/.ansible/
+.fact_cache/
+**/.fact_cache/
+
+# Ansible Galaxy installs kept local to a checkout
+collections/
+ansible_collections/
+
+# Ansible vault password files
+.vault_pass
+.vault_password
+vault_pass.txt
+vault-password.txt
+
+# TODO: Also in project folder as well
+# Just ignore any inventories
+labs/*ansible*/hosts.ini
+labs/*ansible*/**/hosts.ini
+labs/*ansible*/**/hosts.yml
+labs/*ansible*/**/hosts.yaml
+labs/*ansible*/**/hosts.json
+labs/*ansible*/**/inventory/
+labs/*ansible*/**/*inventory*.ini
+labs/*ansible*/**/*inventory*.yml
+labs/*ansible*/**/*inventory*.yaml
+labs/*ansible*/**/*inventory*.json
+labs/*ansible*/**/*inventory*.py

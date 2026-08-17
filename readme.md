@@ -23,8 +23,8 @@ The goal is not only to learn tools, but to understand how they work together in
 
 `labs/`
 
-Small, focused experiments used to learn or test one concept. Here, our goal is not to be production-ready
-but to just make it work and see how it does work.
+Focused experiments used to learn or test concepts. Here, our goal is not to be production-ready
+but to just make it work and expand on other ideas.
 
 Example:
 
@@ -34,19 +34,6 @@ Example:
 - And many more in the `labs/` folder
 
 A lab should be easy to run, understand, and remove.
-
-`patterns/`
-
-Reusable solutions to common infrastructure and DevOps problems. For example, my current Terraform EC2 creation
-can be a pattern (not good for production, but good for labs for now)
-
-`projects/`
-
-Complete, end-to-end implementations that solve larger problems. The goal here is to be production-ready.
-Here, we will use Tailscale to access resources, AWS SSM to run Ansible playbooks, and AWS Secrets Manager or Vault to store secrets.
-If we write Terraform, we will test it with Terratest, OPA, and other production-grade checks.
-
-Every step matters here: every project should be secure, observable, reliable, reproducible, and built with production-grade practices in mind.
 
 `assets/`
 

@@ -1,0 +1,3 @@
+mock_provider "aws" {}
+
+

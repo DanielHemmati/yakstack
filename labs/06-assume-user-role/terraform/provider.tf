@@ -1,4 +1,8 @@
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
+
+  default_tags {
+    tags = merge({ managedBy = "terraform" }, var.default_tags)
+  }
 }
 

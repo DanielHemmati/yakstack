@@ -133,3 +133,13 @@ When finished, remove all resources created by this lab:
 ```bash
 terraform destroy
 ```
+
+## Ideas to extend this lab
+
+1. Write test
+
+First use terraform native functions and if needed add terratest.
+
+1. Is it even a right approach to manage a user using terraform?
+
+Imo it should be a better way.

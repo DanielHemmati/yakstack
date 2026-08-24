@@ -1,4 +1,4 @@
-![AWS Organizations and IAM Identity Center](../assets/aws-org.png)
+![AWS Organizations and IAM Identity Center](./assets/aws-org.png)
 
 # AWS Organizations + IAM Identity Center Terraform Lab
 
@@ -6,24 +6,24 @@ This Terraform project provisions a small AWS Organizations and IAM Identity Cen
 
 ## What It Creates
 
-| Resource | Description |
-| --- | --- |
-| `aws_organizations_organizational_unit.test` | Creates a `test` OU under the organization root. |
-| `aws_organizations_account.ada_dev` | Creates an `ada-dev` AWS member account inside the `test` OU. |
-| `aws_identitystore_user.ada_dev` | Creates the `ada-dev` IAM Identity Center user. |
-| `aws_ssoadmin_permission_set.power_user` | Creates a `PowerUserAccess` permission set with an 8-hour session duration. |
-| `aws_ssoadmin_managed_policy_attachment.power_user` | Attaches the AWS managed `PowerUserAccess` policy to the permission set. |
-| `aws_ssoadmin_account_assignment.ada_dev_power_user` | Assigns the user and permission set to the `ada-dev` account. |
+| Resource                                             | Description                                                                 |
+| ---------------------------------------------------- | --------------------------------------------------------------------------- |
+| `aws_organizations_organizational_unit.test`         | Creates a `test` OU under the organization root.                            |
+| `aws_organizations_account.ada_dev`                  | Creates an `ada-dev` AWS member account inside the `test` OU.               |
+| `aws_identitystore_user.ada_dev`                     | Creates the `ada-dev` IAM Identity Center user.                             |
+| `aws_ssoadmin_permission_set.power_user`             | Creates a `PowerUserAccess` permission set with an 8-hour session duration. |
+| `aws_ssoadmin_managed_policy_attachment.power_user`  | Attaches the AWS managed `PowerUserAccess` policy to the permission set.    |
+| `aws_ssoadmin_account_assignment.ada_dev_power_user` | Assigns the user and permission set to the `ada-dev` account.               |
 
 ## Project Files
 
-| File | Purpose |
-| --- | --- |
-| `versions.tf` | Pins Terraform and the AWS provider requirements. |
-| `provider.tf` | Configures the AWS provider in `us-east-1`. |
-| `dependencies.tf` | Reads the current AWS Organization and IAM Identity Center instance. |
-| `main.tf` | Defines the OU, account, user, permission set, policy attachment, and assignment. |
-| `outputs.tf` | Exposes useful organization, account, Identity Center, and permission set values. |
+| File                 | Purpose                                                                                |
+| -------------------- | -------------------------------------------------------------------------------------- |
+| `versions.tf`        | Pins Terraform and the AWS provider requirements.                                      |
+| `provider.tf`        | Configures the AWS provider in `us-east-1`.                                            |
+| `dependencies.tf`    | Reads the current AWS Organization and IAM Identity Center instance.                   |
+| `main.tf`            | Defines the OU, account, user, permission set, policy attachment, and assignment.      |
+| `outputs.tf`         | Exposes useful organization, account, Identity Center, and permission set values.      |
 | `tf-state-import.sh` | Imports an existing permission set and managed policy attachment into Terraform state. |
 
 ## Prerequisites

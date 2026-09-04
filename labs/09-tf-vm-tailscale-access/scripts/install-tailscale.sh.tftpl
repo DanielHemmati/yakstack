@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get update
+apt-get install -y ca-certificates curl
+
+curl -fsSL https://tailscale.com/install.sh | sh
+
+systemctl enable --now tailscaled
+
+TAILSCALE_AUTH_KEY=${jsonencode(tailscale_auth_key)}
+TAILSCALE_HOSTNAME=${jsonencode(tailscale_hostname)}
+
+tailscale_args=(
+  up
+  "--auth-key=$TAILSCALE_AUTH_KEY"
+  "--hostname=$TAILSCALE_HOSTNAME"
+)
+
+%{ if enable_tailscale_ssh ~}
+tailscale_args+=(--ssh)
+%{ endif ~}
+
+tailscale "$${tailscale_args[@]}"

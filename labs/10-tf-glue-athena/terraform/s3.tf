@@ -66,3 +66,11 @@ resource "aws_s3_bucket_policy" "require_secure_transport" {
   bucket = aws_s3_bucket.data.id
   policy = data.aws_iam_policy_document.require_secure_transport.json
 }
+
+resource "aws_s3_object" "glue_transform_script" {
+  bucket = aws_s3_bucket.data.id
+  key    = "glue-scripts/transform.py"
+  source = "${path.module}/../glue/transform.py"
+  # store the local files's MD5 hash in terraform state
+  etag   = filemd5("${path.module}/../glue/transform.py")
+}

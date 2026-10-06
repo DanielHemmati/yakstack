@@ -28,6 +28,16 @@ output "glue_crawler_name" {
   value       = aws_glue_crawler.users.name
 }
 
+output "glue_etl_job_name" {
+  description = "Name of the Glue job that cleans the raw users data"
+  value       = aws_glue_job.users_transform.name
+}
+
+output "glue_etl_script_uri" {
+  description = "S3 URI of the Glue ETL script"
+  value       = "s3://${aws_s3_object.glue_transform_script.bucket}/${aws_s3_object.glue_transform_script.key}"
+}
+
 output "athena_workgroup_name" {
   description = "Name of the Athena workgroup for this project"
   value       = aws_athena_workgroup.learning.name

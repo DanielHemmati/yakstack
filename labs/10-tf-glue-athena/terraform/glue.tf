@@ -1,5 +1,6 @@
 locals {
   crawler_name = "${var.project_name}-users-crawler"
+  etl_job_name = "${var.project_name}-users-transform"
 }
 
 resource "aws_glue_catalog_database" "learning" {
@@ -27,4 +28,35 @@ resource "aws_glue_crawler" "users" {
   }
 
   depends_on = [aws_iam_role_policy.glue_crawler]
+}
+
+resource "aws_glue_job" "users_transform" {
+  name        = local.etl_job_name
+  description = "Cleans the raw users data before it is written in an analytics format"
+  role_arn    = aws_iam_role.glue_etl.arn
+
+  glue_version = "5.1"
+  # https://docs.aws.amazon.com/glue/latest/dg/worker-types.html
+  worker_type       = "G.1X"
+  number_of_workers = 2
+  max_retries       = 0
+  timeout           = 10
+
+  execution_property {
+    max_concurrent_runs = 1
+  }
+
+  command {
+    name            = "glueetl"
+    python_version  = "3"
+    script_location = "s3://${aws_s3_object.glue_transform_script.bucket}/${aws_s3_object.glue_transform_script.key}"
+  }
+
+  default_arguments = {
+    "--SOURCE_DATABASE" = aws_glue_catalog_database.learning.name
+    "--SOURCE_TABLE"    = "users"
+    "--TempDir"         = "s3://${aws_s3_bucket.data.id}/glue-temp/"
+  }
+
+  depends_on = [aws_iam_role_policy.glue_etl]
 }

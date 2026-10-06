@@ -193,13 +193,13 @@ Important constraints
 
 Implementation order
 
-Phase 1:
+Phase 1: -> done
 S3 + CSV
 
-Phase 2:
+Phase 2: -> done
 Glue Database + Crawler
 
-Phase 3:
+Phase 3: -> done
 Glue Catalog + Athena query
 
 Phase 4:

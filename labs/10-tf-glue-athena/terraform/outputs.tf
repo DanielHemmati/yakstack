@@ -27,3 +27,13 @@ output "glue_crawler_name" {
   description = "Name of the Glue crawler for the raw users data"
   value       = aws_glue_crawler.users.name
 }
+
+output "athena_workgroup_name" {
+  description = "Name of the Athena workgroup for this project"
+  value       = aws_athena_workgroup.learning.name
+}
+
+output "athena_results_uri" {
+  description = "S3 URI where Athena stores query results"
+  value       = "s3://${aws_s3_bucket.data.id}/athena-results/"
+}

@@ -38,3 +38,23 @@ A lab should be easy to run, understand, and remove.
 `assets/`
 
 Just the header image.
+
+## Shared Python tooling
+
+Python tools used across labs and projects are managed once from the repository root with
+[uv](https://docs.astral.sh/uv/). The `diagrams` package and the Graphviz renderer are available
+from every subdirectory:
+
+```bash
+# Install or update the shared environment
+uv sync
+
+# Run a diagram script from the repository root or any lab/project directory
+uv run python diagram.py
+```
+
+You can also activate the shared environment for a shell session:
+
+```bash
+source "$(git rev-parse --show-toplevel)/.venv/bin/activate"
+```

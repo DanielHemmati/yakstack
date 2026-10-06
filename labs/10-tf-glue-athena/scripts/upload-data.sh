@@ -16,8 +16,8 @@ done
 
 BUCKET_NAME="$(terraform -chdir="${TERRAFORM_DIR}" output -raw bucket_name)"
 
-aws s3 cp "${CSV_FILE}" "s3://${BUCKET_NAME}/raw/users.csv" --only-show-errors
+aws s3 cp "${CSV_FILE}" "s3://${BUCKET_NAME}/raw/users/users.csv" --only-show-errors
 aws s3api put-object --bucket "${BUCKET_NAME}" --key "processed/" >/dev/null
 
-printf 'Uploaded %s to s3://%s/raw/users.csv\n' "${CSV_FILE}" "${BUCKET_NAME}"
+printf 'Uploaded %s to s3://%s/raw/users/users.csv\n' "${CSV_FILE}" "${BUCKET_NAME}"
 printf 'Created s3://%s/processed/\n' "${BUCKET_NAME}"

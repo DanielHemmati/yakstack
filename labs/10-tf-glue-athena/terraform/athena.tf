@@ -43,6 +43,19 @@ resource "aws_athena_named_query" "users_over_30" {
   SQL
 }
 
+resource "aws_athena_named_query" "users_below_30" {
+  name        = "Users below 30"
+  description = "Returns users whose age is greater than 30"
+  database    = aws_glue_catalog_database.learning.name
+  workgroup   = aws_athena_workgroup.learning.id
+  query       = <<-SQL
+    SELECT *
+    FROM users
+    WHERE age < 30;
+  SQL
+}
+
+
 resource "aws_athena_named_query" "users_by_country" {
   name        = "Users by country"
   description = "Counts users in each country"

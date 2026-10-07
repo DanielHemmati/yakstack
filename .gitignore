@@ -48,6 +48,9 @@ terraform.rc
 __pycache__/
 *.py[cod]
 
+# Local agent configuration
+.agents/
+
 # Ansible runtime files
 *.retry
 ansible.log

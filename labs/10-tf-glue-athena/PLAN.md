@@ -208,7 +208,7 @@ Glue ETL job
 Phase 5: -> done
 CSV → Parquet
 
-Phase 6:
+Phase 6: -> done
 Partitioned Parquet + Athena queries
 
 At the end, update README.md with:

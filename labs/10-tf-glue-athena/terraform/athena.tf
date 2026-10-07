@@ -3,8 +3,9 @@ locals {
 }
 
 resource "aws_athena_workgroup" "learning" {
-  name        = local.athena_workgroup_name
-  description = "Runs queries against the Glue learning catalog"
+  name          = local.athena_workgroup_name
+  description   = "Runs queries against the Glue learning catalog"
+  force_destroy = true # so you can delete after you are done
 
   configuration {
     enforce_workgroup_configuration    = true

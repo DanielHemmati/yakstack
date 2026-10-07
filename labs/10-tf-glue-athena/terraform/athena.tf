@@ -68,3 +68,24 @@ resource "aws_athena_named_query" "users_by_country" {
     ORDER BY users DESC;
   SQL
 }
+
+resource "aws_athena_named_query" "all_processed_users" {
+  name        = "All processed users"
+  description = "Returns every row from the partitioned Parquet users table"
+  database    = aws_glue_catalog_database.learning.name
+  workgroup   = aws_athena_workgroup.learning.id
+  query       = "SELECT * FROM ${local.processed_users_table_name};"
+}
+
+resource "aws_athena_named_query" "processed_users_average_age_by_country" {
+  name        = "Processed users average age by country"
+  description = "Returns the average user age for each country from processed Parquet data"
+  database    = aws_glue_catalog_database.learning.name
+  workgroup   = aws_athena_workgroup.learning.id
+  query       = <<-SQL
+    SELECT country, AVG(age) AS average_age
+    FROM ${local.processed_users_table_name}
+    GROUP BY country
+    ORDER BY country;
+  SQL
+}

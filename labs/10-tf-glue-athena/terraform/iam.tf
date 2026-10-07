@@ -21,6 +21,7 @@ data "aws_iam_policy_document" "glue_crawler_assume_role" {
       variable = "aws:SourceArn"
       values = [
         "arn:${data.aws_partition.current.partition}:glue:${var.aws_region}:${data.aws_caller_identity.current.account_id}:crawler/${local.crawler_name}",
+        "arn:${data.aws_partition.current.partition}:glue:${var.aws_region}:${data.aws_caller_identity.current.account_id}:crawler/${local.processed_crawler_name}",
       ]
     }
   }
@@ -53,15 +54,20 @@ data "aws_iam_policy_document" "glue_crawler_permissions" {
       values = [
         "raw/users",
         "raw/users/*",
+        "processed/users",
+        "processed/users/*",
       ]
     }
   }
 
   statement {
-    sid       = "ReadRawUsersData"
-    effect    = "Allow"
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.data.arn}/raw/users/*"]
+    sid     = "ReadUsersData"
+    effect  = "Allow"
+    actions = ["s3:GetObject"]
+    resources = [
+      "${aws_s3_bucket.data.arn}/raw/users/*",
+      "${aws_s3_bucket.data.arn}/processed/users/*",
+    ]
   }
 
   statement {

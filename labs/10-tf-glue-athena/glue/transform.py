@@ -32,5 +32,7 @@ cleaned_frame = (
 
 print(f"Cleaned row count: {cleaned_frame.count()}")
 
-cleaned_frame.write.mode("overwrite").parquet(args["TARGET_PATH"])
+cleaned_frame.write.mode("overwrite").partitionBy("country").parquet(
+    args["TARGET_PATH"]
+)
 job.commit()

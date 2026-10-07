@@ -33,6 +33,16 @@ output "glue_crawler_name" {
   value       = aws_glue_crawler.users.name
 }
 
+output "processed_users_crawler_name" {
+  description = "Name of the Glue crawler for processed users data"
+  value       = aws_glue_crawler.processed_users.name
+}
+
+output "processed_users_table_name" {
+  description = "Name of the Glue table created by the processed users crawler"
+  value       = local.processed_users_table_name
+}
+
 output "glue_etl_job_name" {
   description = "Name of the Glue job that cleans the raw users data"
   value       = aws_glue_job.users_transform.name

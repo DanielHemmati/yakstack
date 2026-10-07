@@ -1,6 +1,8 @@
 locals {
-  crawler_name = "${var.project_name}-users-crawler"
-  etl_job_name = "${var.project_name}-users-transform"
+  crawler_name               = "${var.project_name}-users-crawler"
+  processed_crawler_name     = "${var.project_name}-processed-users-crawler"
+  processed_users_table_name = "processed_users"
+  etl_job_name               = "${var.project_name}-users-transform"
 }
 
 resource "aws_glue_catalog_database" "learning" {
@@ -16,6 +18,29 @@ resource "aws_glue_crawler" "users" {
 
   s3_target {
     path = "s3://${aws_s3_bucket.data.id}/raw/users/"
+  }
+
+  recrawl_policy {
+    recrawl_behavior = "CRAWL_EVERYTHING"
+  }
+
+  schema_change_policy {
+    delete_behavior = "LOG"
+    update_behavior = "UPDATE_IN_DATABASE"
+  }
+
+  depends_on = [aws_iam_role_policy.glue_crawler]
+}
+
+resource "aws_glue_crawler" "processed_users" {
+  name          = local.processed_crawler_name
+  database_name = aws_glue_catalog_database.learning.name
+  description   = "Catalogs processed users Parquet data and country partitions"
+  role          = aws_iam_role.glue_crawler.arn
+  table_prefix  = "processed_"
+
+  s3_target {
+    path = "s3://${aws_s3_bucket.data.id}/processed/users/"
   }
 
   recrawl_policy {

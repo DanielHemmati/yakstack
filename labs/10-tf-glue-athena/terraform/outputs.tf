@@ -18,6 +18,11 @@ output "processed_data_uri" {
   value       = "s3://${aws_s3_bucket.data.id}/processed/"
 }
 
+output "processed_users_uri" {
+  description = "S3 URI where the Glue job writes users data in Parquet format"
+  value       = "s3://${aws_s3_bucket.data.id}/processed/users/"
+}
+
 output "glue_database_name" {
   description = "Name of the Glue Data Catalog database"
   value       = aws_glue_catalog_database.learning.name

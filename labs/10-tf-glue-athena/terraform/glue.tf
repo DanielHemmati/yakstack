@@ -55,7 +55,9 @@ resource "aws_glue_job" "users_transform" {
   default_arguments = {
     "--SOURCE_DATABASE" = aws_glue_catalog_database.learning.name
     "--SOURCE_TABLE"    = "users"
-    "--TempDir"         = "s3://${aws_s3_bucket.data.id}/glue-temp/"
+    "--TARGET_PATH"     = "s3://${aws_s3_bucket.data.id}/processed/users/"
+    # this is not necessary but in future if you add sth like redshift this is required
+    "--TempDir" = "s3://${aws_s3_bucket.data.id}/glue-temp/"
   }
 
   depends_on = [aws_iam_role_policy.glue_etl]

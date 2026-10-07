@@ -148,7 +148,7 @@ data "aws_iam_policy_document" "glue_etl_assume_role" {
 
 resource "aws_iam_role" "glue_etl" {
   name               = "${var.project_name}-etl-role"
-  description        = "Allows the Glue ETL job to read and clean the raw users data"
+  description        = "Allows the Glue ETL job to read raw users data and write processed Parquet data"
   assume_role_policy = data.aws_iam_policy_document.glue_etl_assume_role.json
 }
 
@@ -161,7 +161,7 @@ data "aws_iam_policy_document" "glue_etl_permissions" {
   }
 
   statement {
-    sid       = "ListRawUsersPrefix"
+    sid       = "ListJobDataPrefixes"
     effect    = "Allow"
     actions   = ["s3:ListBucket"]
     resources = [aws_s3_bucket.data.arn]
@@ -172,6 +172,8 @@ data "aws_iam_policy_document" "glue_etl_permissions" {
       values = [
         "raw/users",
         "raw/users/*",
+        "processed/users",
+        "processed/users/*",
       ]
     }
   }
@@ -191,6 +193,16 @@ data "aws_iam_policy_document" "glue_etl_permissions" {
     effect    = "Allow"
     actions   = ["s3:PutObject"]
     resources = ["${aws_s3_bucket.data.arn}/glue-temp/*"]
+  }
+
+  statement {
+    sid    = "WriteProcessedUsersData"
+    effect = "Allow"
+    actions = [
+      "s3:DeleteObject",
+      "s3:PutObject",
+    ]
+    resources = ["${aws_s3_bucket.data.arn}/processed/users/*"]
   }
 
   statement {

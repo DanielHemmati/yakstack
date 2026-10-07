@@ -202,10 +202,10 @@ Glue Database + Crawler
 Phase 3: -> done
 Glue Catalog + Athena query
 
-Phase 4:
+Phase 4: -> done
 Glue ETL job
 
-Phase 5:
+Phase 5: -> done
 CSV → Parquet
 
 Phase 6:

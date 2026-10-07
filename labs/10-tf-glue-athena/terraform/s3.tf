@@ -72,5 +72,5 @@ resource "aws_s3_object" "glue_transform_script" {
   key    = "glue-scripts/transform.py"
   source = "${path.module}/../glue/transform.py"
   # store the local files's MD5 hash in terraform state
-  etag   = filemd5("${path.module}/../glue/transform.py")
+  etag = filemd5("${path.module}/../glue/transform.py")
 }

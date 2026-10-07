@@ -9,7 +9,7 @@ from pyspark.sql.functions import col, upper
 
 args = getResolvedOptions(
     sys.argv,
-    ["JOB_NAME", "SOURCE_DATABASE", "SOURCE_TABLE"],
+    ["JOB_NAME", "SOURCE_DATABASE", "SOURCE_TABLE", "TARGET_PATH"],
 )
 
 spark_context = SparkContext.getOrCreate()
@@ -32,5 +32,5 @@ cleaned_frame = (
 
 print(f"Cleaned row count: {cleaned_frame.count()}")
 
-# Phase 5 will write cleaned_frame to the processed S3 prefix as Parquet.
+cleaned_frame.write.mode("overwrite").parquet(args["TARGET_PATH"])
 job.commit()
